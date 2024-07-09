@@ -10,28 +10,28 @@ FuzzyD = {10 : (9,10,10), 9 : (8,9,10), 8 : (7,8,9), 7 : (6,7,8), 6 : (5,6,7), 5
 FuzzyL = {'VL' : (0, 0, 0.25), 'L' : (0, 0.25, 0.5), 'M' : (0.25, 0.5, 0.75), 'H' : (0.5, 0.75, 1), 'VH' : (0.75, 1, 1)}
 
 varResiko = {
-                'E1':'Perencanaan yang tidak tepat akibat perubahan iklim',
-                'E2':'Target penanaman yang tidak sesuai',
-                'E3':'Kualitas yang tidak sesuai',
-                'E4':'Kurangnya tenaga kerja',
-                'E5':'Harga pupuk yang fluktuatif',
-                'E6':'Ketersediaan air tidak memadai',
-                'E7':'Tenaga kerja kurang terampil',
-                'E8':'Terdapat hama',
-                'E9':'Pemanenan tidak serentak ',
-                'E10':'Kualitas buah kopi yang tidak sesuai dengan standar',
-                'E11':'Biji kopi kualitas rendah',
-                'E12':'Mesin yang digunakan tidak stabil',
-                'E13':'Pekerja kesulitan mengoperasikan mesin',
-                'E14':'Terbuangnya kopi akibat tidak tersangrai dengan sempurna',
-                'E15':'Terdapat kerikil pada biji kopi yang telah disangrai',
-                'E16':'Kurang memadainya peralatan ',
-                'E17':'Kurang menariknya kemasan yang digunakan',
-                'E18':'Kebersihan tempat penyimpanan kurang',
-                'E19':'Terjadi keterlambatan pengiriman',
-                'E20':'Rendahnya tingkat kepuasan konsumen',
-                'E21':'Profit yang dihasilkan tidak stabil',
-                'E22':'Pemutusan kerjasama antar pemasok dengan distributor',
+                'E1':['Perencanaan penanaman', 'Perencanaan yang tidak tepat akibat perubahan iklim'],
+                'E2':['Perawatan tanaman',	'Kurangnya perawatan tanaman'],
+                'E3':['Pemeliharaan tanaman','Kualitas yang tidak sesuai'],
+                'E4':['Ketersediaan tenaga kerja','Kurangnya tenaga kerja'],
+                'E5':['Pengadaan bahan baku kopi', 'Harga pupuk yang fluktuatif'],
+                'E6':['Irigasi kebun kopi', 'Ketersediaan air tidak memadai'],
+                'E7':['Pemanenan kopi', 'Tenaga kerja kurang terampil'],
+                'E8':['Pemanenan kopi', 'Terdapat hama'],
+                'E9':['Pemanenan kopi', 'Pemanenan tidak serentak'],
+                'E10':['Pemanenan kopi', 'Kualitas buah kopi yang tidak sesuai dengan standar'],
+                'E11':['Pemanenan kopi', 'Kualitas biji kopi yang rendah'],
+                'E12':['Penyangraian', 'Mesin yang digunakan tidak stabil'],
+                'E13':['Penyangraian', 'Pekerja kesulitan mengoperasikan mesin'],
+                'E14':['Penyangraian', 'Terbuangnya kopi akibat tidak tersangrai dengan sempurna'],
+                'E15':['Pendinginan dan sortasi', 'Terdapat kerikil pada biji kopi yang telah disangrai'],
+                'E16':['Penggilingan', 'Kurang memadainya peralatan '],
+                'E17':['Pengemasan', 'Kurang menariknya kemasan yang digunakan'],
+                'E18':['Penyimpanan', 'Kebersihan tempat penyimpanan kurang'],
+                'E19':['Pengiriman', 'Terjadi keterlambatan pengiriman'],
+                'E20':['Penjualan Produk', 'Rendahnya tingkat kepuasan konsumen'],
+                'E21':['Penjualan Produk', 'Profit yang dihasilkan tidak stabil'],
+                'E22':['Pengembalian Produk', 'Pemutusan kerjasama antar pemasok dengan distributor'],
             }
 
 class Pakar:
@@ -153,7 +153,7 @@ if len(sys.argv) > 1:
     # Initiate Risk
     listResiko = []
     for i in range(len(listCode)):
-        risk = Risk(listCode[i], varResiko[listCode[i]], copy.deepcopy(listPakar))
+        risk = Risk(listCode[i], varResiko[listCode[i]][1], copy.deepcopy(listPakar))
         listResiko.append(risk)
 
 

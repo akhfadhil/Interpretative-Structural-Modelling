@@ -183,7 +183,7 @@ if len(sys.argv) > 1:
     P1L = ['H', 'H', 'L']
     P2L = ['VH', 'M','L']
     P3L = ['H', 'VH', 'L']
-    simulated_language = [P1L, P2L, P3L]
+    simulated_language = [P1L, P2L, P3L] # [Pakar 1, Pakar 2, Pakar 3]
     """
         DELETE
     """

@@ -2,10 +2,12 @@ import numpy as np
 import sys
 import json 
 
-def string_to_biner(string_data, ordo=22):
+result_ISM = {}
+
+def input_to_mirror(string_data, ordo=22):
     matrix = np.diag(np.full(ordo,'X'))
-    # list_data = string_data.split()
-    list_data = list(string_data)
+    list_data = string_data.split()
+    # list_data = list(string_data)
     index = 0
 
     # Mengisi segitiga atas matrix
@@ -28,19 +30,27 @@ def string_to_biner(string_data, ordo=22):
                 elif matrix[j][i] == 'O':
                     matrix[i][j] = 'O'
     
-    # Mengubah ke biner
-    for i in range(ordo): 
-        for j in range(ordo):
-            if matrix[i][j] == 'V':
-                matrix[i][j] = 1
-            elif matrix[i][j] == 'A':
-                matrix[i][j] = 0
-            elif matrix[i][j] == 'X':
-                matrix[i][j] = 1
-            elif matrix[i][j] == 'O':
-                matrix[i][j] = 0
+    full_str = ''
+    for i in range(len(matrix)):
+        full_str = full_str + ' '.join(matrix[i]) + ' '
     
-    return matrix
+    return full_str
+
+def mirror_to_biner(string_data):
+    new_str = ""
+    for i in range(len(string_data)):
+        if string_data[i] == 'V':
+            new_str = new_str + '1'
+        elif string_data[i] == 'A':
+            new_str = new_str + '0'
+        elif string_data[i] == 'X':
+            new_str = new_str + '1'
+        elif string_data[i] == 'O':
+            new_str = new_str + '0'
+        else:
+            new_str = new_str + string_data[i]
+    
+    return new_str
 
 def Average(lst): 
     return sum(lst) / len(lst) 
@@ -59,23 +69,45 @@ if len(sys.argv) > 1:
 
     # Input ISM
     # string_data = "VVOOVOVVVVOOOOOOOOOVOOOOOOOVOVOOOOOOOOOVOOOOOOOOVOOOOOOVOVOVOOOOOOOOOVOOOOVVVOOOOOVOOOOOOOOOOVOOOVOOOOOOOOOOOOOOOOOOOOOOOOVOOOOOOOOOOOOOOOVOOVOOOOOOOVOVOVOOOOOOVOVVOVOVVOOOOVVOVOOVOOVVVOOOVOOOVOOOVOOOOVOVOOOVOOOOOOVOOOVOOOVOOVVVVOV"
-    string_data_pakar1 = "VVOOVOVVVVOOOOOOOOOVOOOOOOOVOVOOOOOOOOOVOOOOOOOOVOOOOOOVOVOVOOOOOOOOOVOOOOVVVOOOOOVOOOOOOOOOOVOOOVOOOOOOOOOOOOOOOOOOOOOOOOVOOOOOOOOOOOOOOOVOOVOOOOOOOVOVOVOOOOOOVOVVOVOVVOOOOVVOVOOVOOVVVOOOVOOOVOOOVOOOOVOVOOOVOOOOOOVOOOVOOOVOOVVVVOV"
-    string_data_pakar2 = "VVOOVOVVVVOOOOOOOOOVOOOOOOOVOVOOOOOOOOOVOOOOOOOOVOOOOOOVOVOVOOOOOOOOOVOOOOVVVOOOOOVOOOOOOOOOOVOOOVOOOOOOOOOOOOOOOOOOOOOOOOVOOOOOOOOOOOOOOOVOOVOOOOOOOVOVOVOOOOOOVOVVOVOVVOOOOVVOVOOVOOVVVOOOVOOOVOOOVOOOOVOVOOOVOOOOOOVOOOVOOOVOOVVVVOV"
-    string_data_pakar3 = "VVOOVOVVVVOOOOOOOOOVOOOOOOOVOVOOOOOOOOOVOOOOOOOOVOOOOOOVOVOVOOOOOOOOOVOOOOVVVOOOOOVOOOOOOOOOOVOOOVOOOOOOOOOOOOOOOOOOOOOOOOVOOOOOOOOOOOOOOOVOOVOOOOOOOVOVOVOOOOOOVOVVOVOVVOOOOVVOVOOVOOVVVOOOVOOOVOOOVOOOOVOVOOOVOOOOOOVOOOVOOOVOOVVVVOV" 
+    data_input = ["V V O O V O V V V V O O O O O O O O O V O O O O O O O V O V O O O O O O O O O V O O O O O O O O V O O O O O O V O V O V O O O O O O O O O V O O O O V V V O O O O O V O O O O O O O O O O V O O O V O O O O O O O O O O O O O O O O O O O O O O O O V O O O O O O O O O O O O O O O V O O V O O O O O O O V O V O V O O O O O O V O V V O V O V V O O O O V V O V O O V O O V V V O O O V O O O V O O O V O O O O V O V O O O V O O O O O O V O O O V O O O V O O V V V V O V",
+              "V V O O V O V V V V O O O O O O O O O V O O O O O O O V O V O O O O O O O O O V O O O O O O O O V O O O O O O V O V O V O O O O O O O O O V O O O O V V V O O O O O V O O O O O O O O O O V O O O V O O O O O O O O O O O O O O O O O O O O O O O O V O O O O O O O O O O O O O O O V O O V O O O O O O O V O V O V O O O O O O V O V V O V O V V O O O O V V O V O O V O O V V V O O O V O O O V O O O V O O O O V O V O O O V O O O O O O V O O O V O O O V O O V V V V O V",
+              "V V O O V O V V V V O O O O O O O O O V O O O O O O O V O V O O O O O O O O O V O O O O O O O O V O O O O O O V O V O V O O O O O O O O O V O O O O V V V O O O O O V O O O O O O O O O O V O O O V O O O O O O O O O O O O O O O O O O O O O O O O V O O O O O O O O O O O O O O O V O O V O O O O O O O V O V O V O O O O O O V O V V O V O V V O O O O V V O V O O V O O V V V O O O V O O O V O O O V O O O O V O V O O O V O O O O O O V O O O V O O O V O O V V V V O V"]
+    result_ISM["data_input"] = data_input
 
-    # Convert to biner
-    matrix1 = string_to_biner(string_data_pakar1, ordo)
-    matrix2 = string_to_biner(string_data_pakar2, ordo)
-    matrix3 = string_to_biner(string_data_pakar3, ordo)
+
+    # Input to mirror
+    result_ISM["data_mirror"] = []
+    for data in result_ISM["data_input"]:
+        result_ISM["data_mirror"].append(input_to_mirror(data))
+
+    # Mirror to biner
+    result_ISM["data_biner"] = []
+    for data in result_ISM["data_mirror"]:
+        result_ISM["data_biner"].append(mirror_to_biner(data))
 
     # Biner conclusion
-    matrix = []
-    for i in range(len(matrix1)):
-        lst = []
-        for j in range(len(matrix1[i])):
-            lst2 = [matrix1[i][j], matrix2[i][j], matrix3[i][j]]
-            lst.append(max(set(lst2), key=lst2.count))
-        matrix.append(lst)
+    biner_conclusion = ""
+    for i in range(len(result_ISM["data_biner"][0])):
+        if i % 2 == 0:
+            lst2 = [result_ISM["data_biner"][0][i], result_ISM["data_biner"][1][i], result_ISM["data_biner"][2][i]]
+            biner_conclusion = biner_conclusion + (max(set(lst2), key=lst2.count)) + ' '
+    result_ISM["biner_conclusion"] = biner_conclusion
+
+    # Convert from biner string to biner matrix
+    even = 0
+    matrix_str = ""
+    for i in range(len(biner_conclusion)):
+        matrix_str = matrix_str + biner_conclusion[i]
+        if i % 2 == 0:
+            even = even + 1
+            if even % 22 == 0:
+                matrix_str = matrix_str + ';'
+    matrix = np.matrix(matrix_str[:-2])
+    matrix = matrix.tolist()
+    matrix_new = []
+    for row in matrix:
+        matrix_new.append(list(map(str, row)))
+    matrix = matrix_new
 
     # Drive power & dependence power
     DrP = []
@@ -97,13 +129,15 @@ if len(sys.argv) > 1:
     DePAVG = Average(DeP) # X
 
     # Klasifikasi Output
-    outputISM = {'Independent':[], 'Linkage':[], 'Autonomous':[], 'Dependent':[]}
+    outputISM = {'independent':[], 'linkage':[], 'autonomous':[], 'dependent':[]}
     for i in range(len(DeP)):
         if DrP[i] > DrPAVG and DeP[i] < DePAVG:
-            outputISM['Independent'].append('E' + str(i+1))
+            outputISM['independent'].append('E' + str(i+1))
         elif DrP[i] > DrPAVG and DeP[i] > DePAVG:
-            outputISM['Linkage'].append('E' + str(i+1))
+            outputISM['linkage'].append('E' + str(i+1))
         elif DrP[i] < DrPAVG and DeP[i] > DePAVG:
-            outputISM['Dependent'].append('E' + str(i+1))
+            outputISM['dependent'].append('E' + str(i+1))
         elif DrP[i] < DrPAVG and DeP[i] < DePAVG:
-            outputISM['Autonomous'].append('E' + str(i+1))
+            outputISM['autonomous'].append('E' + str(i+1))
+    result_ISM["outputISM"] = outputISM
+    print(result_ISM)

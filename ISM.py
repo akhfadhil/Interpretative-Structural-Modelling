@@ -52,6 +52,20 @@ def mirror_to_biner(string_data):
     
     return new_str
 
+def string_to_matrix(input_string, m, n):
+    if m * n != len(input_string):
+        raise ValueError("The dimensions of the matrix do not match the length of the input string.")
+    
+    matrix = []
+    for i in range(m):
+        row = input_string[i * n:(i + 1) * n]
+        matrix.append(row)
+    
+    return matrix
+
+def string_to_list(input_string):
+    return [char for char in input_string]
+
 def Average(lst): 
     return sum(lst) / len(lst) 
 
@@ -74,7 +88,6 @@ if len(sys.argv) > 1:
               "V V O O V O V V V V O O O O O O O O O V O O O O O O O V O V O O O O O O O O O V O O O O O O O O V O O O O O O V O V O V O O O O O O O O O V O O O O V V V O O O O O V O O O O O O O O O O V O O O V O O O O O O O O O O O O O O O O O O O O O O O O V O O O O O O O O O O O O O O O V O O V O O O O O O O V O V O V O O O O O O V O V V O V O V V O O O O V V O V O O V O O V V V O O O V O O O V O O O V O O O O V O V O O O V O O O O O O V O O O V O O O V O O V V V V O V"]
     result_ISM["data_input"] = data_input
 
-
     # Input to mirror
     result_ISM["data_mirror"] = []
     for data in result_ISM["data_input"]:
@@ -94,20 +107,9 @@ if len(sys.argv) > 1:
     result_ISM["biner_conclusion"] = biner_conclusion
 
     # Convert from biner string to biner matrix
-    even = 0
-    matrix_str = ""
-    for i in range(len(biner_conclusion)):
-        matrix_str = matrix_str + biner_conclusion[i]
-        if i % 2 == 0:
-            even = even + 1
-            if even % 22 == 0:
-                matrix_str = matrix_str + ';'
-    matrix = np.matrix(matrix_str[:-2])
-    matrix = matrix.tolist()
-    matrix_new = []
-    for row in matrix:
-        matrix_new.append(list(map(str, row)))
-    matrix = matrix_new
+    matrix = string_to_matrix(biner_conclusion.replace(" ", ""), ordo, ordo)
+    for i in range(len(matrix)):
+        matrix[i] = string_to_list(matrix[i])
 
     # Drive power & dependence power
     DrP = []

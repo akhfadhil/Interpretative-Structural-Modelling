@@ -1,8 +1,7 @@
-from ISM import outputISM
-import numpy as np
 import copy
 import sys
 import json 
+from ISM import outputISM
 
 FuzzyS = {10 : (9,10,10), 9 : (8,9,10), 8 : (7,8,9), 7 : (6,7,8), 6 : (5,6,7), 5 : (4,5,6), 4 : (3,4,5), 3 : (2,3,4), 2 : (1,2,3), 1 : (1,1,2)}
 FuzzyO = {10 : (8,9,10,10), 9 : (8,9,10,10), 8 : (6,7,8,9), 7 : (6,7,8,9), 6 : (3,4,6,7), 5 : (3,4,6,7), 4 : (3,4,6,7), 3 : (1,2,3,4), 2 : (1,2,3,4), 1 : (1,1,2)}
@@ -121,13 +120,18 @@ def calculate_rank(vector):
       rank=rank+1
   return[a[i] for i in vector]
 
+def matrix_to_string(matrix):
+    flattened = [str(element) for row in matrix for element in row]
+    matrix_str = ' '.join(flattened)
+    return matrix_str
+
 # START 
 sys.argv = [0,1] # SIMULATED
 
 if len(sys.argv) > 1:
 
     # Extract Linkage & Independent to listCode
-    listCode = outputISM['Linkage'] + outputISM['Independent']
+    listCode = outputISM['linkage'] + outputISM['independent']
 
     # Sort
     listCode.sort()
@@ -227,10 +231,11 @@ if len(sys.argv) > 1:
     # Agregat Bobot Kepentingan D
     WD = round(Detection()/WTotal(Severity(), Occurance(), Detection()), 3)
     
+    # SOD & Linguistik table
 
 
     # DATA JSON
-    listjson = []
+    outputFuzzy = []
     for risk in listResiko:
         dictjson = {}
         dictjson['Komponen Resiko'] = risk.riskName
@@ -241,17 +246,34 @@ if len(sys.argv) > 1:
 
         tot = (risk.RIS()**WS)*(risk.RIO()**WO)*(risk.RID()**WD)
         dictjson['FRPN'] = tot
-        listjson.append(dictjson)
+        outputFuzzy.append(dictjson)
     # Rank
     listRank = []
-    for row in listjson:
+    for row in outputFuzzy:
         listRank.append(row['FRPN'])
     rank = calculate_rank(listRank)
     i = 0
-    for row in listjson:
+    for row in outputFuzzy:
         row['Rank'] = rank[i]
         i = i + 1
 
-    print(listjson)
+
+
+    # RESULT FUZZY
+    data_input = simulated_input
+    result_FUZZY = {}
+
+    # SOD
+    result_FUZZY["data_sod"] = {}
+    for i in range(len(data_input)):
+        result_FUZZY["data_sod"]["risk"+str(i+1)] = [listCode[i], varResiko[listCode[i]][1], data_input[0][i]+data_input[1][i]+data_input[2][i]]
+
+    # Linguistik
+    result_FUZZY["data_linguistik"] = matrix_to_string(simulated_language)
+
+    # Output fuzzy
+    result_FUZZY["output_fuzzy"] = outputFuzzy
+
+    print(result_FUZZY)
 else :
     processed_data = ""

@@ -157,4 +157,4 @@ if len(sys.argv) > 1:
     matrix.append(DeP)
     result_ISM["biner_conclusion"] = matrix_to_string(matrix)
 
-    print(result_ISM)
+    # print(result_ISM)

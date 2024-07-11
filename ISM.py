@@ -66,6 +66,11 @@ def string_to_matrix(input_string, m, n):
 def string_to_list(input_string):
     return [char for char in input_string]
 
+def matrix_to_string(matrix):
+    flattened = [str(element) for row in matrix for element in row]
+    matrix_str = ' '.join(flattened)
+    return matrix_str
+
 def Average(lst): 
     return sum(lst) / len(lst) 
 
@@ -98,7 +103,7 @@ if len(sys.argv) > 1:
     for data in result_ISM["data_mirror"]:
         result_ISM["data_biner"].append(mirror_to_biner(data))
 
-    # Biner conclusion
+    # Biner conclusion 1
     biner_conclusion = ""
     for i in range(len(result_ISM["data_biner"][0])):
         if i % 2 == 0:
@@ -142,4 +147,14 @@ if len(sys.argv) > 1:
         elif DrP[i] < DrPAVG and DeP[i] < DePAVG:
             outputISM['autonomous'].append('E' + str(i+1))
     result_ISM["outputISM"] = outputISM
+
+    # Biner conclusion 2
+        # Add DrP
+    for i in range(len(matrix)):
+        matrix[i].append(DrP[i])
+        # Add DeP
+    DeP.append(sum(DrP))
+    matrix.append(DeP)
+    result_ISM["biner_conclusion"] = matrix_to_string(matrix)
+
     print(result_ISM)

@@ -47,6 +47,9 @@ class Pakar:
 
     def RPN(self):
         return self.Severity*self.Occurance*self.Detection
+    
+# Initiate Pakar
+listPakar = [Pakar('Akademisi', 40), Pakar('UMKM1', 30), Pakar('UMKM2', 30)]
 
 class Risk:
     def __init__(self, riskCode, riskName, listPakar):
@@ -151,8 +154,7 @@ if len(sys.argv) > 1:
 
 
 
-    # Initiate Pakar
-    listPakar = [Pakar('Akademisi', 40), Pakar('UMKM1', 30), Pakar('UMKM2', 30)]
+    
 
     # Initiate Risk
     listResiko = []
@@ -238,23 +240,23 @@ if len(sys.argv) > 1:
     outputFuzzy = []
     for risk in listResiko:
         dictjson = {}
-        dictjson['Komponen Resiko'] = risk.riskName
-        dictjson['Kode Resiko'] = risk.riskCode
-        dictjson['S^(WS/(WS+WO+WD))'] = risk.RIS()**WS
-        dictjson['O^(WO/(WS+WO+WD))'] = risk.RIS()**WS
-        dictjson['D^(WD/(WS+WO+WD))'] = risk.RID()**WD
+        dictjson['komponen_resiko'] = risk.riskName
+        dictjson['kode_resiko'] = risk.riskCode
+        dictjson['data_s'] = risk.RIS()**WS
+        dictjson['data_o'] = risk.RIS()**WS
+        dictjson['data_d'] = risk.RID()**WD
 
         tot = (risk.RIS()**WS)*(risk.RIO()**WO)*(risk.RID()**WD)
-        dictjson['FRPN'] = tot
+        dictjson['frpn'] = tot
         outputFuzzy.append(dictjson)
     # Rank
     listRank = []
     for row in outputFuzzy:
-        listRank.append(row['FRPN'])
+        listRank.append(row['frpn'])
     rank = calculate_rank(listRank)
     i = 0
     for row in outputFuzzy:
-        row['Rank'] = rank[i]
+        row['rank'] = rank[i]
         i = i + 1
 
 

@@ -1,6 +1,30 @@
 import numpy as np
 import sys
-import json 
+
+varResiko = {
+    'E1': ['Perencanaan produksi', 'Perencanaan yang tidak tepat akibat perubahan iklim'],
+    'E2': ['Perawatan tanaman', 'Kurangnya perawatan tanaman'],
+    'E3': ['Perawatan tanaman', 'Penyakit tanaman'],
+    'E4': ['Ketersediaan tenaga kerja', 'Kurangnya jumlah tenaga kerja'],
+    'E5': ['Pengadaan bahan baku kopi', 'Harga pupuk yang fluktuatif'],
+    'E6': ['Irigasi kebun kopi', 'Ketersediaan air tidak memadai'],
+    'E7': ['Pemanenan kopi', 'Tenaga kerja kurang terampil'],
+    'E8': ['Pemanenan kopi', 'Terdapat hama'],
+    'E9': ['Pemanenan kopi', 'Pemanenan tidak serentak'],
+    'E10': ['Pemanenan kopi', 'Kualitas buah kopi yang tidak sesuai dengan standar'],
+    'E11': ['Penyortiran', 'Kualitas biji kopi yang rendah'],
+    'E12': ['Penyangraian', 'Mesin yang digunakan tidak stabil'],
+    'E13': ['Penyangraian', 'Pekerja kesulitan mengoperasikan mesin'],
+    'E14': ['Penyangraian', 'Terbuangnya kopi akibat tidak tersangrai dengan sempurna'],
+    'E15': ['Pendinginan dan sortasi', 'Terdapat kerikil pada biji kopi yang telah disangrai'],
+    'E16': ['Penggilingan', 'Kurang memadainya peralatan '],
+    'E17': ['Pengemasan', 'Kurang menariknya kemasan yang digunakan'],
+    'E18': ['Penyimpanan', 'Kebersihan tempat penyimpanan kurang'],
+    'E19': ['Pengiriman', 'Terjadi keterlambatan pengiriman'],
+    'E20': ['Penjualan Produk', 'Rendahnya tingkat kepuasan konsumen'],
+    'E21': ['Penjualan Produk', 'Profit yang dihasilkan tidak stabil'],
+    'E22': ['Pengembalian Produk', 'Pemutusan kerjasama antar pemasok dengan distributor'],
+}
 
 result_ISM = {}
 
@@ -79,18 +103,22 @@ def Average(lst):
 sys.argv = [0,1] # SIMULATED
 
 if len(sys.argv) > 1:
+    ''' INPUT ORDO'''
     ordo = 22
+    ''' DELETE HERE '''
+    
     matrix = np.diag(np.full(ordo,'X'))
 
     # processed_data = sys.argv[1]
     # string_data = processed_data
 
-
+    ''' ISM INPUT '''
     # Input ISM
-    # string_data = "VVOOVOVVVVOOOOOOOOOVOOOOOOOVOVOOOOOOOOOVOOOOOOOOVOOOOOOVOVOVOOOOOOOOOVOOOOVVVOOOOOVOOOOOOOOOOVOOOVOOOOOOOOOOOOOOOOOOOOOOOOVOOOOOOOOOOOOOOOVOOVOOOOOOOVOVOVOOOOOOVOVVOVOVVOOOOVVOVOOVOOVVVOOOVOOOVOOOVOOOOVOVOOOVOOOOOOVOOOVOOOVOOVVVVOV"
     data_input = ["V V O O V O V V V V O O O O O O O O O V O O O O O O O V O V O O O O O O O O O V O O O O O O O O V O O O O O O V O V O V O O O O O O O O O V O O O O V V V O O O O O V O O O O O O O O O O V O O O V O O O O O O O O O O O O O O O O O O O O O O O O V O O O O O O O O O O O O O O O V O O V O O O O O O O V O V O V O O O O O O V O V V O V O V V O O O O V V O V O O V O O V V V O O O V O O O V O O O V O O O O V O V O O O V O O O O O O V O O O V O O O V O O V V V V O V",
               "V V O O V O V V V V O O O O O O O O O V O O O O O O O V O V O O O O O O O O O V O O O O O O O O V O O O O O O V O V O V O O O O O O O O O V O O O O V V V O O O O O V O O O O O O O O O O V O O O V O O O O O O O O O O O O O O O O O O O O O O O O V O O O O O O O O O O O O O O O V O O V O O O O O O O V O V O V O O O O O O V O V V O V O V V O O O O V V O V O O V O O V V V O O O V O O O V O O O V O O O O V O V O O O V O O O O O O V O O O V O O O V O O V V V V O V",
               "V V O O V O V V V V O O O O O O O O O V O O O O O O O V O V O O O O O O O O O V O O O O O O O O V O O O O O O V O V O V O O O O O O O O O V O O O O V V V O O O O O V O O O O O O O O O O V O O O V O O O O O O O O O O O O O O O O O O O O O O O O V O O O O O O O O O O O O O O O V O O V O O O O O O O V O V O V O O O O O O V O V V O V O V V O O O O V V O V O O V O O V V V O O O V O O O V O O O V O O O O V O V O O O V O O O O O O V O O O V O O O V O O V V V V O V"]
+    ''' DELETE HERE '''
+
     result_ISM["data_input"] = data_input
 
     # Input to mirror
@@ -157,4 +185,4 @@ if len(sys.argv) > 1:
     matrix.append(DeP)
     result_ISM["biner_conclusion"] = matrix_to_string(matrix)
 
-    # print(result_ISM)
+    print(result_ISM)

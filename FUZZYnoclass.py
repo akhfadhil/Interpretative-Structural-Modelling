@@ -1,36 +1,15 @@
 import copy
 import sys
-from ISM import outputISM
+from ISM import outputISM, varResiko
 
 FuzzyS = {10: (9, 10, 10), 9: (8, 9, 10), 8: (7, 8, 9), 7: (6, 7, 8), 6: (5, 6, 7), 5: (4, 5, 6), 4: (3, 4, 5), 3: (2, 3, 4), 2: (1, 2, 3), 1: (1, 1, 2)}
 FuzzyO = {10: (8, 9, 10, 10), 9: (8, 9, 10, 10), 8: (6, 7, 8, 9), 7: (6, 7, 8, 9), 6: (3, 4, 6, 7), 5: (3, 4, 6, 7), 4: (3, 4, 6, 7), 3: (1, 2, 3, 4), 2: (1, 2, 3, 4), 1: (1, 1, 2)}
 FuzzyD = {10: (9, 10, 10), 9: (8, 9, 10), 8: (7, 8, 9), 7: (6, 7, 8), 6: (5, 6, 7), 5: (4, 5, 6), 4: (3, 4, 5), 3: (2, 3, 4), 2: (1, 2, 3), 1: (1, 1, 2)}
 FuzzyL = {'VL': (0, 0, 0.25), 'L': (0, 0.25, 0.5), 'M': (0.25, 0.5, 0.75), 'H': (0.5, 0.75, 1), 'VH': (0.75, 1, 1)}
 
-varResiko = {
-    'E1': ['Perencanaan produksi', 'Perencanaan yang tidak tepat akibat perubahan iklim'],
-    'E2': ['Perawatan tanaman', 'Kurangnya perawatan tanaman'],
-    'E3': ['Perawatan tanaman', 'Penyakit tanaman'],
-    'E4': ['Ketersediaan tenaga kerja', 'Kurangnya jumlah tenaga kerja'],
-    'E5': ['Pengadaan bahan baku kopi', 'Harga pupuk yang fluktuatif'],
-    'E6': ['Irigasi kebun kopi', 'Ketersediaan air tidak memadai'],
-    'E7': ['Pemanenan kopi', 'Tenaga kerja kurang terampil'],
-    'E8': ['Pemanenan kopi', 'Terdapat hama'],
-    'E9': ['Pemanenan kopi', 'Pemanenan tidak serentak'],
-    'E10': ['Pemanenan kopi', 'Kualitas buah kopi yang tidak sesuai dengan standar'],
-    'E11': ['Penyortiran', 'Kualitas biji kopi yang rendah'],
-    'E12': ['Penyangraian', 'Mesin yang digunakan tidak stabil'],
-    'E13': ['Penyangraian', 'Pekerja kesulitan mengoperasikan mesin'],
-    'E14': ['Penyangraian', 'Terbuangnya kopi akibat tidak tersangrai dengan sempurna'],
-    'E15': ['Pendinginan dan sortasi', 'Terdapat kerikil pada biji kopi yang telah disangrai'],
-    'E16': ['Penggilingan', 'Kurang memadainya peralatan '],
-    'E17': ['Pengemasan', 'Kurang menariknya kemasan yang digunakan'],
-    'E18': ['Penyimpanan', 'Kebersihan tempat penyimpanan kurang'],
-    'E19': ['Pengiriman', 'Terjadi keterlambatan pengiriman'],
-    'E20': ['Penjualan Produk', 'Rendahnya tingkat kepuasan konsumen'],
-    'E21': ['Penjualan Produk', 'Profit yang dihasilkan tidak stabil'],
-    'E22': ['Pengembalian Produk', 'Pemutusan kerjasama antar pemasok dengan distributor'],
-}
+
+
+result_FUZZY = {}
 
 def create_pakar(role, weight):
     return {'role': role, 'weight': weight, 'Severity': 0, 'Occurance': 0, 'Detection': 0, 'LS': '', 'LO': '', 'LD': ''
@@ -221,7 +200,6 @@ if len(sys.argv) > 1:
 
     # RESULT FUZZY
     data_input = simulated_input
-    result_FUZZY = {}
 
     # SOD
     result_FUZZY["data_sod"] = {}
